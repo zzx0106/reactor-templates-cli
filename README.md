@@ -4,6 +4,7 @@
 
 ## 简介 ##
 Reactor is a CLI for React.js projects
+
 Reactor是一个款基于React的脚手架
 
 #### 开始使用
