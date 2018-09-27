@@ -182,7 +182,6 @@ function copyRepair(src, dst) {
                 if (err) {
                     throw err;
                 }
-                console.log('st', st, st.isFile());
                 // 判断是否为文件
                 if (st.isFile()) {
                     // 创建读取流
