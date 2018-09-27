@@ -10,7 +10,8 @@
     "reactor": "bin/index.js"
   },
   "templates": [
-    "reactor-saga"
+    "reactor-saga",
+    "reactor-dva"
   ],
   "keywords": [
     "reactor",

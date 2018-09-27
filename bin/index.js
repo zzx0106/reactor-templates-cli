@@ -16,7 +16,7 @@ const path = require('path');
 // 用于比对node版本
 const semver = require('semver');
 // 因为无法使用async 和 await 而且不想写过多回调嵌套
-var asyncTask = require('run-series');
+// var asyncTask = require('run-series');
 // 复制模板文件
 var copy = require('copy-template-dir');
 // console.log文字
