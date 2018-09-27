@@ -1,6 +1,6 @@
 {
-  "name": "reactor",
-  "version": "1.0.0",
+  "name": "reactor-templates-cli",
+  "version": "1.2.0",
   "description": "A scaffold integrated with react redux redux-dva react-router",
   "main": "index.js",
   "scripts": {
@@ -14,11 +14,14 @@
     "reactor-dva"
   ],
   "keywords": [
-    "reactor",
-    "react"
+    "reactor-templates-cli",
+    "react",
+    "cli",
+    "redux-saga",
+    "dva"
   ],
   "author": "https://github.com/zzx0106",
-  "license": "ISC",
+  "license": "MIT",
   "dependencies": {
     "adm-zip": "^0.4.11",
     "alphabetjs": "^0.1.4",
@@ -27,6 +30,7 @@
     "copy-template-dir": "^1.4.0",
     "inquirer": "^6.2.0",
     "jszip": "^3.1.5",
+    "rimraf": "^2.6.2",
     "run-series": "^1.1.8",
     "semver": "^5.5.1"
   }

@@ -18,30 +18,39 @@ const semver = require('semver');
 // 因为无法使用async 和 await 而且不想写过多回调嵌套
 // var asyncTask = require('run-series');
 // 复制模板文件
-var copy = require('copy-template-dir');
+const copy = require('copy-template-dir');
 // console.log文字
 const Alphabet = require('alphabetjs');
 const admZip = require('adm-zip');
 const fs = require('fs');
+// 删文件
+const rimraf = require('rimraf');
 const stat = fs.stat;
 nodeVersionCheck(); // 检查node版本兼容性
-const program = new commander.Command(chalk.green(packageJson.name))
-    .version(packageJson.version)
-    .usage(`${chalk.green('init')} ${chalk.gray('or')} ${chalk.green('reactor init')} ${chalk.blue('[template-type]')} ${chalk.cyan('[package name]')}`);
+// 生成模板列表
 const templates = packageJson.templates.map((template) => {
     return {
         name: template,
-        value: template
-    }
-})
+        value: template,
+    };
+});
+const program = new commander.Command(chalk.green(packageJson.name))
+    .version(packageJson.version)
+    .usage(
+        `${chalk.green('init')} ${chalk.gray('or')} ${chalk.green('reactor init')} ${chalk.blue(
+            '[template-type]'
+        )} ${chalk.cyan('[package name]')}`
+    );
+
 // must be before .parse() since
 // node's emit() is immediate
-
 /**
  * Help.
  */
 
 program.on('--help', () => {
+    console.log();
+    console.log();
     console.log('  Init ways:');
     console.log();
     console.log(chalk.gray('    # create a new project with an official template'));
@@ -93,7 +102,7 @@ program.command(`init [type] [package_name]`).action((type = '', package_name = 
             version: params.version,
             description: params.description,
             git: params.git,
-            license: params.license
+            license: params.license,
         };
         let options = {
             zipDir: zipDir,
@@ -104,7 +113,7 @@ program.command(`init [type] [package_name]`).action((type = '', package_name = 
                 console.log(chalk.green('<------------------------ Generate Success ------------------->'));
                 console.log();
                 console.log('have a good time!');
-            }
+            },
         };
         unZipTemplate(options);
     });
@@ -137,15 +146,22 @@ function unZipTemplate(options) {
     }
     if (fs.existsSync(options.templateDir)) {
         // 有则直接复制
-        copyTemplate(options);
+        rimraf(options.templateDir, () => {
+            unZip(options);
+        });
     } else {
         // 没有模板则解压模板
-        try {
-            var unzip = new admZip(options.zipDir);
-            unzip.extractAllTo(options.templateDir, /*overwrite*/ true); // 解压至模板文件
-            console.log(chalk.green('<------------------------ Start Unzip ------------------------>'));
-            copyTemplate(options);
-        } catch (error) {}
+        unZip(options);
+    }
+}
+function unZip(options) {
+    try {
+        var unzip = new admZip(options.zipDir);
+        unzip.extractAllTo(options.templateDir, /*overwrite*/ true); // 解压至模板文件
+        console.log(chalk.green('<------------------------ Start Unzip ------------------------>'));
+        copyTemplate(options);
+    } catch (error) {
+        console.error(error);
     }
 }
 function copyTemplate(options) {
@@ -153,15 +169,14 @@ function copyTemplate(options) {
         if (err) {
             console.log('copy error', err);
         }
-        files.sort().forEach(createdFile => {
+        files.sort().forEach((createdFile) => {
             var relativePath = path.relative(options.targetDir, createdFile);
             console.log(`${chalk.green('create')} ${relativePath}`);
         });
         // 将图片重新复制一遍
-        console.log(`---------------${options.templateDir}\\src\\assets\\images`);
         // copyRepair(`${options.templateDir}\\src\\assets\\images`, `${options.targetDir}\\src\\assets\\images`);
         copyRepair(`${options.templateDir}/src/assets/images`, `${options.targetDir}/src/assets/images`);
-        // options.callback();
+        options.callback();
     });
 }
 // 兼容copy-template-dir这个插件导致image复制不了的bug
@@ -230,14 +245,14 @@ function askQuestions() {
                     return 'Folder already exists!';
                 }
                 return true;
-            }
+            },
         },
         {
             type: 'list',
             name: 'template_type',
             message: 'Please select a template type：',
             pageSize: 2,
-            choices: templates
+            choices: templates,
         },
         {
             type: 'input',
@@ -249,29 +264,29 @@ function askQuestions() {
                     return 'version error';
                 }
                 return true;
-            }
+            },
         },
         {
             type: 'input',
             name: 'description',
-            message: `description:`
+            message: `description:`,
         },
         {
             type: 'input',
             name: 'git',
-            message: `git repository:`
+            message: `git repository:`,
         },
         {
             type: 'input',
             name: 'license',
             message: `license: (ISC):`,
-            default: 'ISC'
+            default: 'ISC',
         },
         {
             type: 'input',
             name: 'author',
-            message: `author:`
-        }
+            message: `author:`,
+        },
     ];
     return questions;
 }
