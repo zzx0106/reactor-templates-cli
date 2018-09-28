@@ -1,11 +1,11 @@
-# Reactor
+# reactor-templates-cli
 
 ------------
 
 ## 简介 ##
-Reactor is a CLI for React.js projects
+reactor-templates-cli is a CLI for React.js projects
 
-Reactor是一个款基于React的脚手架
+reactor-templates-cli是一个款基于React的脚手架
 
 #### 开始使用
 1. 下载脚手架
