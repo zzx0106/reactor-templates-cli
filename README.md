@@ -1,11 +1,11 @@
-# Reactor
+# reactor-templates-cli
 
 ------------
 
 ## 简介 ##
-Reactor is a CLI for React.js projects
+reactor-templates-cli is a CLI for React.js projects
 
-Reactor是一个款基于React的脚手架
+reactor-templates-cli是一个款基于React的脚手架
 
 #### 开始使用
 1. 下载脚手架
@@ -19,7 +19,7 @@ reactor init
 根据说明生成模板文件
 
 #### 现有模板文件
-**reactor-saga** 一款功能齐全的模板
+**reactor-saga** 一款功能齐全的模板 [模板详解](https://github.com/zzx0106/reactor-saga-template)
 1. 优化了webpack配置，兼容es6 7以及自动给css添加兼容语法，内置可以使用sass预编译器。
 2. 配置了hot编译，可以无刷新的显示修改的页面。
 3. 集成了react、react-router、redux、redux-saga、immutable等插件。
