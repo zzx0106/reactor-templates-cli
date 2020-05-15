@@ -229,6 +229,10 @@ function exists(src, dst, callback) {
         }
     });
 }
+/**
+ * 提问操作
+ * @returns {Array} questions
+ */
 function askQuestions() {
     var questions = [
         {
